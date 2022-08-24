@@ -1,9 +1,10 @@
-import { Space } from 'antd';
+import { Form } from 'antd';
+import { useState } from 'react';
 
 import BreadCrumbComponent from './../../components/BreadCrumb';
 import FormComponent from './../../components/Form';
 import TableComponent from './../../components/Table';
-import useGetUsers from './../../hooks/useGetUsers';
+import useGetUsers, { initial } from './../../hooks/useGetUsers';
 
 /**
  * Home Component
@@ -12,16 +13,38 @@ import useGetUsers from './../../hooks/useGetUsers';
  *
  */
 const Home = () => {
+  const [params, setParams] = useState(initial);
   const { data, loading, refetch } = useGetUsers();
+  const [form] = Form.useForm();
 
-  console.log('here data = ', data);
+  const handleClearForm = () => {
+    form.resetFields();
+  };
 
   return (
-    <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', margin: '10px 10px' }}
+    >
       <BreadCrumbComponent />
-      <FormComponent />
-      <TableComponent />
-    </Space>
+      <Form layout="inline" form={form}>
+        <FormComponent
+          form={form}
+          params={params}
+          setParams={setParams}
+          refetch={refetch}
+          loading={loading}
+          handleClearForm={handleClearForm}
+        />
+        <TableComponent
+          params={params}
+          setParams={setParams}
+          refetch={refetch}
+          loading={loading}
+          data={data}
+          handleClearForm={handleClearForm}
+        />
+      </Form>
+    </div>
   );
 };
 
