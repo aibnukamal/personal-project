@@ -1,0 +1,10 @@
+section.ant-layout {
+  min-height: 100vh;
+}
+
+main.ant-layout-content {
+  display: flex;
+  height: calc(100vh - 200px);
+  flex-direction: column;
+  margin: 0px auto;
+}

@@ -1,0 +1,45 @@
+name: Run Unit Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Run Unit Test
+    runs-on: ${{matrix.os}}
+
+    strategy:
+      max-parallel: 24
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16.x]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install depedencies
+      run: yarn
+
+    - name: Run test
+      run: yarn testcov
+    
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: "junit.xml"
+
+    - name: Check test coverage
+      uses: terencetcf/github-actions-lcov-minimum-coverage-checker@v1
+      with:
+        coverage-file: coverage/lcov.info
+        minimum-coverage: 20
