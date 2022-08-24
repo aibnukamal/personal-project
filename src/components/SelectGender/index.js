@@ -22,6 +22,7 @@ const SelectGenderComponent = ({ setParams, refetch, loading, params }) => {
 
   return (
     <Select
+      data-testid="select-gender-component"
       disabled={loading}
       defaultValue="all"
       style={{ width: 180 }}

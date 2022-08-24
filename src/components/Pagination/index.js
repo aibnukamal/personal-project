@@ -25,8 +25,12 @@ const PaginationComponent = ({ setParams, refetch, loading, params }) => {
     handleRefetch({ page });
   };
 
-  const handlePrevNextButton = (type) => {
-    handleChangePage(type === 'next' ? currentPage + 1 : currentPage - 1);
+  const handlePrevButton = () => {
+    handleChangePage(currentPage - 1);
+  };
+
+  const handleNextButton = (type) => {
+    handleChangePage(currentPage + 1);
   };
 
   const handleChangePageSize = (results) => {
@@ -41,12 +45,17 @@ const PaginationComponent = ({ setParams, refetch, loading, params }) => {
       </Typography>
 
       <Button
-        onClick={() => handlePrevNextButton('prev')}
+        onClick={handlePrevButton}
         disabled={loading || currentPage === 1}
+        data-testid="button-page-prev"
       >
         <LeftOutlined /> Prev
       </Button>
-      <Button onClick={() => handlePrevNextButton('next')} disabled={loading}>
+      <Button
+        onClick={handleNextButton}
+        disabled={loading}
+        data-testid="button-page-next"
+      >
         Next <RightOutlined />
       </Button>
       <Form.Item name="size" labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>

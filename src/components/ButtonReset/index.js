@@ -18,6 +18,7 @@ const ButtonResetComponent = ({
 }) => {
   return (
     <Button
+      data-testid="button-reset-component"
       disabled={loading}
       type="default"
       onClick={() => {

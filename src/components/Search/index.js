@@ -12,6 +12,8 @@ import useDebounce from '../../hooks/useDebounce';
  *
  */
 const SearchComponent = ({ setParams, refetch, loading, params }) => {
+  const { Search } = Input;
+
   const handleSearch = (keyword) => {
     setParams({
       ...params,
@@ -22,7 +24,8 @@ const SearchComponent = ({ setParams, refetch, loading, params }) => {
   useDebounce(params.keyword, () => refetch(params));
 
   return (
-    <Input.Search
+    <Search
+      data-testid="search-user-input"
       disabled={loading}
       placeholder="input search text"
       onChange={(e) => handleSearch(e.target.value)}
